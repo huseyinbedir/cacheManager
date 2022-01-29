@@ -1,13 +1,13 @@
 # cacheManager
 Flutter ile tüm projelerde kullanılabilicek cache manager. 
 
-#List<Model> kaydetmek için 
+#List<Model> kaydetmek için <br>
 Future<bool> saveCacheList<T>(String key, List<T> model) async {
     final _stringModel = jsonEncode(model);
     return await prefs.setString(key, _stringModel);
   }
   
-#Almak için
+#Almak için <br>
 List<T> getCacheList<T extends IBaseModel>(String key, T model) {
     final cacheData = prefs.getString(key) ?? "";
     if (cacheData.isNotEmpty) {
