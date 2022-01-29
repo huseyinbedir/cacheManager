@@ -18,11 +18,8 @@ class CacheService {
   Future<void> initPrefences() async {
     prefs = await SharedPreferences.getInstance();
   }
-
-  Future<bool> saveCacheItem<T>(String key, List<T> model) async {
-    final _stringModel = jsonEncode(model);
-    return await prefs.setString(key, _stringModel);
-  }
+  
+  //void main => await CacheService.instance.initPrefences();
 
   Future<bool> saveCache(String key, dynamic value) async {
     return await prefs.setString(key, value);
@@ -39,17 +36,16 @@ class CacheService {
   bool getBoolCache(String key) {
     return prefs.getBool(key) ?? false;
   }
-
-  Future<bool> removeCacheItem<T>(String key) async {
-    return await prefs.remove(key);
+  
+  Future<bool> saveCacheItem<T>(String key, T model) async {
+    final _stringModel = jsonEncode(model);
+    return await prefs.setString(key, _stringModel);
   }
 
-  Future<T> getCacheItem<T extends IBaseModel>(
-      String key, IBaseModel model) async {
-    final cacheData = prefs.getString(key) ?? '';
-    final otherModel = jsonDecode(cacheData);
-
-    return model.fromJson(otherModel) as T;
+  Future<T> getCacheItem<T extends IBaseModel>(String key, IBaseModel model) async {
+      final cacheData = prefs.getString(key) ?? '';
+      final otherModel = jsonDecode(cacheData);
+      return model.fromJson(otherModel) as T;
   }
 
   Future<bool> saveCacheList<T>(String key, List<T> model) async {
@@ -60,11 +56,15 @@ class CacheService {
   List<T> getCacheList<T extends IBaseModel>(String key, T model) {
     final cacheData = prefs.getString(key) ?? "";
     if (cacheData.isNotEmpty) {
-      return model.fromJson(cacheData).toList() as List<T>;
+      return model.fromJson(cacheData) as List<T>;
     }
     return [];
   }
-
+  
+  Future<bool> removeCache(String key) async {
+    return await prefs.remove(key);
+  }
+  
   Future<bool> removeAllCache() async {
     return await prefs.clear();
   }
