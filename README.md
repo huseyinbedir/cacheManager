@@ -1,5 +1,5 @@
 # cacheManager
-Flutter ile tüm projelerde kullanılabilicek cachemanager. <br>
+Flutter ile tüm projelerde kullanılabilicek CacheManager. <br>
 
-List<Model> cache işlemleri için kullanılabilir. 
+List Model cache işlemleri için kullanılabilir. 
   
